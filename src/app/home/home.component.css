@@ -1,0 +1,61 @@
+.main-container {
+    background-image: url('/assets/images/pizza-bg.jpg');
+    /* background-size: 250%; */
+    margin-right: -15px;
+    margin-left: -15px;
+    padding-top: 200px;
+    padding-bottom: 200px;
+}
+
+main {
+    text-align: center;
+    background-color: rgb(0,0,0, 0.6);
+    padding: 20px;
+    color: white;
+}
+
+main span {
+    font-weight: 700;
+}
+
+h1 {
+    margin-bottom: 30px;
+    color: burlywood;
+    padding: 0;
+    font-weight: 700; 
+}
+
+main button.btn {
+    margin-top: 30px;
+    background-color: burlywood;
+    border-color: white;
+    color: white;
+    font-weight: 700;
+}
+
+main button.btn:hover {
+    margin-top: 30px;
+    background-color: rgb(148, 129, 104);
+    border-color: white;
+    color: white;
+    box-shadow: none;
+}
+
+main button.btn:active {
+    outline: none !important;
+    box-shadow: none;
+    background-color: burlywood;
+    border-width: 3px;
+    box-shadow: none;
+ }
+
+main button.btn:focus {
+    border-color: white;
+    box-shadow: none;
+}
+
+@media (min-width: 1200px) {
+    .main-container {
+        background-size: 100%;
+    }
+}

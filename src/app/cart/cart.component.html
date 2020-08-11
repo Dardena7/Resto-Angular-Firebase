@@ -1,0 +1,94 @@
+<app-home-header></app-home-header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="main-container">
+                <main>
+                    <h1>Cart</h1>
+                    <hr>
+                    <div *ngIf="!infosMode">
+                        <h3>Shopping list :</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor='let choice of cart.choices; let i = index'>
+                                <button class="btn btn-danger" (click)="removeProduct(i)">X</button> |
+                                <button class="btn btn-custom" type="button" data-toggle="collapse" [attr.data-target]="'#choice'+i" aria-expanded="false" [attr.aria-controls]="'choice'+i">
+                                    Details
+                                </button> |
+                                <strong>{{choice.product.name}}</strong> <span class="price">{{choice.total}} €</span>
+                                <div class="collapse" id="choice{{i}}">
+                                    <div class="card card-body">
+                                        <div *ngIf='choice.supplement'>
+                                            <h4>Sidedish :</h4>
+                                            <p>{{choice.supplement.name}}</p>
+                                        </div>
+                                        <div *ngIf='choice.sidedishes.length > 0'>
+                                            <h4>Supplements :</h4>
+                                            <ul>
+                                                <li *ngFor="let sidedish of choice.sidedishes">{{sidedish.name}} - (+ {{sidedish.price}} €)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <hr>
+                        <strong>Total: {{cart.total}} €</strong> 
+                        <hr>
+                        <button class="btn btn-success" [disabled]='cart.choices.length <= 0' (click)='onOrder()'>Order</button>
+                    </div>
+                    <div *ngIf="infosMode">
+                        <h3>Informations :</h3>
+                        <form (ngSubmit)='onSubmit(form)' #form='ngForm'>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    class="form-control" 
+                                    ngModel
+                                    name="name"
+                                    required
+                                    #nameAdd='ngModel'
+                                    />
+                                    <p class='invalid' *ngIf='!nameAdd.valid && nameAdd.touched'>Name is required</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input 
+                                    type="text" 
+                                    id="address" 
+                                    class="form-control" 
+                                    ngModel
+                                    name="address"
+                                    required
+                                    #address='ngModel'
+                                    />
+                                    <p class='invalid' *ngIf='!address.valid && address.touched'>Address is required</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input 
+                                    type="text" 
+                                    id="email" 
+                                    class="form-control" 
+                                    ngModel
+                                    name="email"
+                                    required
+                                    email
+                                    #email='ngModel'
+                                    />
+                                    <p class='invalid' *ngIf='!email.valid && email.touched'>Email is required and must be valid</p>
+                            </div>
+                            <button type='submit' class='btn btn-success' [disabled]='!form.valid'>Pay</button>
+                        </form>
+                        <div class="alert alert-success" role="alert" *ngIf='orderSaved'>
+                            Your order has been sent. You will be delivered as fast as possible !
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+

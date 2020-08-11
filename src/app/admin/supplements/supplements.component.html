@@ -1,0 +1,87 @@
+<h2>Supplements</h2>
+<hr>
+
+<div *ngIf="!editMode">
+    <div class="row">
+        <div class="col-12">
+            <h3>Add a new supplement</h3>
+            <form #addForm="ngForm" (ngSubmit)="onSubmitAdd(addForm)" >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-control" 
+                        ngModel
+                        name="name"
+                        required
+                        #nameAdd='ngModel'
+                        />
+                    <p class='invalid' *ngIf='!nameAdd.valid && nameAdd.touched'>Name is required</p>
+                </div>
+                <button 
+                    type="submit" 
+                    class="btn btn-success"
+                    [disabled]="!addForm.valid">Save</button>
+            </form>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+        <div class="col-12">
+            <h3>List of supplements</h3>
+            <div class="row">
+                <div class="card-container col-6 col-md-3" *ngFor="let supplement of supplements">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">{{supplement.name}}</h5>
+                          <button class='btn btn-primary' (click)="onEdit(supplement)">Edit</button> | 
+                          <button class='btn btn-danger' (click)="onDelete(supplement.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="editMode">
+    <div class="row">
+        <div class="col-12">
+            <h3>Editing</h3>
+            <form #editForm="ngForm" (ngSubmit)="onSubmitEdit(editForm)" >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-control"
+                        name="name"
+                        required
+                        [(ngModel)]="selectedSupplement.name"
+                        #nameEdit='ngModel'
+                    />
+                    <p class='invalid' *ngIf='!nameEdit.valid && nameEdit.touched'>Name is required</p>
+                </div>
+                <!--Active-->
+                <div class="form-group">
+                    <label for="active">Visible</label>
+                    <select class="form-control" name="active" id="active" [(ngModel)]='selectedSupplement.active' required>
+                        <option [value]='true'>Show</option>
+                        <option [value]='false'>Hide</option>
+                    </select>
+                </div>
+                <button 
+                    type="submit" 
+                    class="btn btn-success"
+                    [disabled]="!editForm.valid">Save</button> | 
+                <button type="button" class="btn btn-default" (click)='onBack()'>Back</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

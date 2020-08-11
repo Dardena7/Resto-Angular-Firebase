@@ -1,0 +1,16 @@
+footer {
+    text-align: center;
+    background-color: #222;
+    color: white;
+    font-weight: 800;
+    padding: 50px 0px;
+    margin-top: 50px;
+}
+
+footer p{
+    margin-bottom: 0px;
+}
+
+footer p:first-child{
+    margin-bottom: 20px;
+}

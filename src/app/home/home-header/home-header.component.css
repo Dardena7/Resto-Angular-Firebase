@@ -1,0 +1,32 @@
+nav {
+    background-color: burlywood;
+}
+
+nav a {
+    color: white;
+}
+
+.navbar-brand {
+    font-weight: 1000;
+    color: white;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.8);
+    font-weight: normal;
+}
+
+.navbar-light .navbar-nav .active>.nav-link {
+    color: white;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: white;
+    font-weight: 600;
+}
+
+.cartSize {
+    color: white;
+    font-weight: bold;
+}

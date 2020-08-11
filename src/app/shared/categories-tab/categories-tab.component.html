@@ -1,0 +1,14 @@
+<ul class="nav nav-tabs">
+    <li class="nav-item" *ngIf='showNoCategory'>
+      <a 
+        class="nav-link" 
+        [ngClass]="{'active': selectedCategory === null}" 
+        (click)=onSelectCategory(null)>None</a>
+    </li>
+    <li class="nav-item" *ngFor='let category of categories'>
+      <a 
+        class="nav-link"
+        [ngClass]="{'active': selectedCategory && selectedCategory.id === category.id}"  
+        (click)=onSelectCategory(category)>{{category.name}}</a>
+    </li>
+</ul>

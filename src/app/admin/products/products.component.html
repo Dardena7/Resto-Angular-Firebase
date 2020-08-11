@@ -1,0 +1,247 @@
+<h2>Products</h2>
+<hr>
+
+<div *ngIf="!editMode">
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addFormCollapse" aria-expanded="false" aria-controls="addFormCollapse">
+                Add new product
+              </button>
+            <hr>
+            <div class="collapse" id="addFormCollapse">
+                <h3>Add a new product</h3>
+                <form #addForm="ngForm" (ngSubmit)="onSubmitAdd(addForm)" >
+                    <!--Name-->
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            class="form-control" 
+                            ngModel
+                            name="name"
+                            required
+                            #addName='ngModel'
+                            />
+                        <p class='invalid' *ngIf='!addName.valid && addName.touched'>Name is invalid</p>
+                    </div>
+                    <!--Description-->
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" name="description" id="description" rows="3" ngModel></textarea>
+                    </div>
+                    <!--Image-->
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input 
+                            type="text" 
+                            id="image" 
+                            class="form-control" 
+                            ngModel
+                            name="image"
+                            required
+                            #addImage='ngModel'
+                            />
+                        <p class='invalid' *ngIf='!addImage.valid && addImage.touched'>Image is invalid</p>
+                    </div>
+                    <!--Price-->
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input 
+                            type="number" 
+                            id="price" 
+                            class="form-control" 
+                            ngModel
+                            name="price"
+                            required
+                            minPrice='0'
+                            #addPrice='ngModel'
+                            />
+                        <p class='invalid' *ngIf='!addPrice.valid && addPrice.touched'>Price is invalid</p>
+                    </div>
+                    <!--Category-->
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" name="category" id="category" ngModel required #addCategory='ngModel'>
+                        <option 
+                            [value]='category.id' 
+                            *ngFor='let category of categories'>{{category.name}}</option>
+                        </select>
+                        <p class='invalid' *ngIf='!addCategory.valid && addCategory.touched'>Category is invalid</p>
+                    </div>
+                    <!--Sidedishes-->
+                    <div class="form-group">
+                        <label for="sidedishes">Sidedishes</label>
+                        <select class="form-control" name="sidedishes" id="sidedishes" ngModel>
+                        <option 
+                            [ngValue]='sidedish' 
+                            *ngFor='let sidedish of sidedishes'>{{sidedish.name}}</option>
+                        </select>
+                        <button type="button" class="btn btn-primary add-button" (click)='onAddSidedish(addForm)'>Add sidedish</button>
+                        <div>
+                            Sidedishes List :
+                            <ul>
+                                <li *ngFor='let sidedish of chosenSidedishes'>{{sidedish.name}} | <span class="remove" (click)='onRemoveSidedish(sidedish)'>remove</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--Supplements-->
+                    <div class="form-group">
+                        <label for="supplements">Supplements</label>
+                        <select class="form-control" name="supplements" id="supplements" ngModel>
+                        <option 
+                            [ngValue]='supplement' 
+                            *ngFor='let supplement of supplements'>{{supplement.name}}</option>
+                        </select>
+                        <button type="button" class="btn btn-primary add-button" (click)='onAddSupplement(addForm)'>Add supplement</button>
+                        <div>
+                            Supplements List :
+                            <ul>
+                                <li *ngFor='let supplement of chosenSupplements'>{{supplement.name}} | <span class="remove" (click)='onRemoveSupplement(supplement)'>remove</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" [disabled]='!addForm.valid'>Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+        <div class="col-12">
+            <h3>List of products</h3>
+            <app-categories-tab  [showNoCategory]='true'></app-categories-tab>
+            <div class="row">
+                <div class="card-container col-sm-6 col-md-4 col-lg-3" *ngFor="let product of products">
+                    <div class="card">
+                        <img [src]="product.image" class="card-img-top" [alt]="product.name">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text description">{{product.description}}</p>
+                            <p class="card-text price">{{product.price}} €</p>
+                            <button class='btn btn-primary' (click)="onEdit(product)">Edit</button> | 
+                            <button class='btn btn-danger' (click)="onDelete(product.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="editMode">
+    <div class="row">
+        <div class="col-12">
+            <h3>Edit product</h3>
+            <form #editForm="ngForm" (ngSubmit)="onSubmitEdit(editForm)" >
+                <!--Name-->
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-control" 
+                        [(ngModel)]="selectedProduct.name"
+                        name="name"
+                        required
+                        #editName='ngModel'
+                        />
+                    <p class='invalid' *ngIf='!editName.valid && editName.touched'>Name is invalid</p>
+                </div>
+                <!--Description-->
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" name="description" id="description" rows="3" [(ngModel)]="selectedProduct.description"></textarea>
+                  </div>
+                <!--Image-->
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input 
+                        type="text" 
+                        id="image" 
+                        class="form-control" 
+                        [(ngModel)]="selectedProduct.image"
+                        name="image"
+                        required
+                        #editImage='ngModel'
+                        />
+                    <p class='invalid' *ngIf='!editImage.valid && editImage.touched'>Image is invalid</p>
+                </div>
+                <!--Price-->
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input 
+                        type="number" 
+                        id="price" 
+                        class="form-control" 
+                        [(ngModel)]="selectedProduct.price"
+                        name="price"
+                        required
+                        minPrice='0'
+                        #editPrice='ngModel'
+                        />
+                    <p class='invalid' *ngIf='!editPrice.valid && editPrice.touched'>Price is invalid</p>
+                </div>
+                <!--Category-->
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" name="category" id="category" [(ngModel)]='selectedProduct.categoryId' required #editCategory='ngModel'>
+                        <option 
+                            [value]='category.id' 
+                            *ngFor='let category of categories'>{{category.name}}</option>
+                    </select>
+                    <p class='invalid' *ngIf='!editCategory.valid && editCategory.touched'>Category is invalid</p>
+                </div>
+                <!--Active-->
+                <div class="form-group">
+                    <label for="active">Visible</label>
+                    <select class="form-control" name="active" id="active" [(ngModel)]='selectedProduct.active' required>
+                        <option [value]='true'>Show</option>
+                        <option [value]='false'>Hide</option>
+                    </select>
+                </div>
+                <!--Sidedishes-->
+                <div class="form-group">
+                    <label for="sidedishes">Sidedishes</label>
+                    <select class="form-control" name="sidedishes" id="sidedishes" ngModel>
+                      <option 
+                        [ngValue]='sidedish' 
+                        *ngFor='let sidedish of sidedishes'>{{sidedish.name}}</option>
+                    </select>
+                    <button type="button" class="btn btn-primary add-button" (click)='onAddSidedish(editForm)'>Add sidedish</button>
+                    <div>
+                        Sidedishes List :
+                        <ul>
+                            <li *ngFor='let sidedish of chosenSidedishes'>{{sidedish.name}} | <span class="remove" (click)='onRemoveSidedish(sidedish)'>remove</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Supplements-->
+                <div class="form-group">
+                    <label for="supplements">Supplements</label>
+                    <select class="form-control" name="supplements" id="supplements" ngModel>
+                      <option 
+                        [ngValue]='supplement' 
+                        *ngFor='let supplement of supplements'>{{supplement.name}}</option>
+                    </select>
+                    <button type="button" class="btn btn-primary add-button" (click)='onAddSupplement(editForm)'>Add supplement</button>
+                    <div>
+                        Supplements List :
+                        <ul>
+                            <li *ngFor='let supplement of chosenSupplements'>{{supplement.name}} | <span class="remove" (click)='onRemoveSupplement(supplement)'>remove</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success" [disabled]='!editForm.valid'>Save</button>
+                <button type="button" class="btn btn-default" (click)='onBack()'>Back</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- <p class="alert alert-danger" *ngIf="error">{{error}}</p> -->
+

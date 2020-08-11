@@ -1,0 +1,46 @@
+h1 {
+    text-align: center;
+    color: rgba(87, 33, 33, 0.726);
+    font-weight: 800;
+    margin: 10px 0px;
+}
+
+button.btn.btn-custom {
+    background-color: rgba(59, 18, 18, 0.726);
+    border-color: white;
+    color: white;
+    font-weight: 700;
+}
+
+button.btn.btn-custom:hover {
+    background-color: rgba(110, 33, 33, 0.726);
+    border-color: white;
+    color: white;
+    box-shadow: none;
+}
+
+button.btn.btn-custom:active {
+    outline: none !important;
+    box-shadow: none;
+    background-color: rgba(110, 33, 33, 0.726);
+    border-width: 3px;
+    box-shadow: none;
+ }
+
+button.btn.btn-custom:focus {
+    border-color: rgba(59, 18, 18, 0.726);
+    box-shadow: none;
+}
+
+.price {
+    float: right;
+    font-weight: bold;
+}
+
+.collapse {
+    margin-top: 10px;
+}
+
+.invalid {
+    color: darkred;
+}

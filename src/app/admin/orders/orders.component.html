@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-12">
+        <h3>Orders list :</h3>
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor='let order of orders; let i = index'>
+                <button class="btn btn-custom" type="button" data-toggle="collapse" [attr.data-target]="'#order'+i" aria-expanded="false" [attr.aria-controls]="'order'+i">
+                    Details
+                </button> |
+                <strong>Name: {{order.name}}</strong> <span class="price">{{order.cart.total}} €</span>
+                <div class="collapse" id="order{{i}}">
+                    <div class="card card-body">
+                        <div class='infos'>
+                            <p>Address: {{order.address}}</p>
+                            <p>Email: {{order.email}}</p>
+                        </div>
+                        <div class="choice" *ngFor='let choice of order.cart.choices; let index = index'>
+                            <hr>
+                            <h5>{{index + 1}} : {{choice.product.name}}<span style='float: right'>{{choice.product.price}} €</span></h5>
+                            <div *ngIf='choice.supplement'>
+                                <p>with <strong>{{choice.supplement.name}}</strong></p>
+                            </div>
+                            <div *ngIf='choice.sidedishes'>
+                                <h6>Supplements :</h6>
+                                <ul>
+                                    <li *ngFor="let sidedish of choice.sidedishes">{{sidedish.name}} - (+ {{sidedish.price}} €)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+

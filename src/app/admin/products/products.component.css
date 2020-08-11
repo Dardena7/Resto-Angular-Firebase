@@ -1,0 +1,19 @@
+.card-container {
+    margin-bottom: 15px;
+    padding: 0px 15px;
+}
+
+.invalid {
+    color: darkred;
+    font-weight: bold;
+}
+
+.remove {
+    cursor: pointer;
+    color: darkred;
+    text-decoration: underline;
+}
+
+.add-button {
+    margin-top: 5px;
+}

@@ -1,0 +1,30 @@
+<app-home-header></app-home-header>
+<app-alert></app-alert>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="main-container">
+                <main>
+                    <h1>Shop</h1>
+                    <hr>
+                    <app-categories-tab [showNoCategory]='false'></app-categories-tab>
+                    <div class="row">
+                        <div class="card-container col-sm-6 col-md-4 col-lg-3" *ngFor="let product of products">
+                            <div class="card">
+                                <img [src]="product.image" class="card-img-top" [alt]="product.name">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{product.name}}</h5>
+                                    <hr>
+                                    <p class="card-text description">{{product.description}}</p>
+                                    <p class="card-text price">{{product.price}} €</p>
+                                    <button class="btn" (click)="addToCart(product)">Choose</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>

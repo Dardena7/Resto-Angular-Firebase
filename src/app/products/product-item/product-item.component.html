@@ -1,0 +1,48 @@
+<app-home-header></app-home-header>
+<app-alert></app-alert>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="main-container">
+                <main>
+                    <h1>{{product.name}}</h1>
+                    <hr>
+                    <div class="row">
+                        <div class="card-container col-12">
+                            <div class="card">
+                                <!-- <img [src]="product.image" class="card-img-top" [alt]="product.name"> -->
+                                <div class="card-body">
+                                    <p class="card-text description">Basic Price: <span class='price'>{{product.price}} €</span></p>
+                                    <hr>
+                                    <!--Sidedishes-->
+                                    <div class="form-group" *ngIf='product.supplements.length > 0'>
+                                        <label for="supplement">Sidedish</label>
+                                        <select class="form-control" name="supplement" id="supplement" [(ngModel)]='chosenSupplement'>
+                                            <option [ngValue]='supplement' *ngFor='let supplement of product.supplements'>{{supplement.name}}</option>
+                                        </select>
+                                    </div>
+                                    <!--Supplements-->
+                                    <div *ngIf='product.sidedishes.length > 0'>
+                                        <hr>
+                                        <strong>Supplements</strong>
+                                        <div class="form-check" *ngFor='let sidedish of product.sidedishes; let index = index'>
+                                            <input class="form-check-input" type="checkbox" value="" id='sidedish{{index}}' (click)='addSidedish(index)'>
+                                            <label class="form-check-label" for="sidedish{{index}}">
+                                              {{sidedish.name}} (+ {{sidedish.price}} €)
+                                            </label>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <p>Total: <span class='price'>{{totalPrice}} €</span></p>
+                                    <button class="btn btn-custom" (click)="addToCart()">Add to cart</button>
+                                    <button class="btn btn-secondary" (click)="cancel()">Back to shop</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>

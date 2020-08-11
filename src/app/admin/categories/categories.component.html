@@ -1,0 +1,76 @@
+<h2>Categories</h2>
+<hr>
+
+<div *ngIf="!editMode">
+    <div class="row">
+        <div class="col-12">
+            <h3>Add a new category</h3>
+            <form #addForm="ngForm" (ngSubmit)="onSubmitAdd(addForm)" >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-control" 
+                        ngModel
+                        name="name"
+                        required
+                        #nameAdd='ngModel'
+                        />
+                        <p class='invalid' *ngIf='!nameAdd.valid && nameAdd.touched'>Name is required</p>
+                </div>
+                <button 
+                    type="submit" 
+                    class="btn btn-success"
+                    [disabled]='!addForm.valid'>Save</button>   
+            </form>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+        <div class="col-12">
+            <h3>List of categories</h3>
+            <div class="row">
+                <div class="card-container col-6 col-md-3" *ngFor="let category of categories">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">{{category.name}}</h5>
+                          <button class='btn btn-primary' (click)="onEdit(category)">Edit</button> | 
+                          <button class='btn btn-danger' (click)="onDelete(category.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="editMode">
+    <div class="row">
+        <div class="col-12">
+            <h3>Editing</h3>
+            <form #editForm="ngForm" (ngSubmit)="onSubmitEdit(editForm)" >
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        class="form-control"
+                        name="name"
+                        required
+                        [(ngModel)]="selectedCategory.name"
+                        #nameEdit='ngModel'
+                        />
+                        <p class='invalid' *ngIf='!nameEdit.valid && nameEdit.touched'>Name is required</p>
+                </div>
+                <button 
+                    type="submit" 
+                    class="btn btn-success"
+                    [disabled]="!editForm.valid">Save</button> | 
+                <button type="button" class="btn btn-default" (click)='onBack()'>Back</button>
+            </form>
+        </div>
+    </div>
+</div>
